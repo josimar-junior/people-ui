@@ -1,88 +1,94 @@
 <form>
   <div class="ui-g">
     <div class="ui-g-12">
-      <p-panel header="Cadastro de pessoa">
+      <p-growl></p-growl>
+      <form autocomplete="off" #frm="ngForm" (ngSubmit)="salvar(frm)">
+        <p-panel header="{{editando ? 'Edição da' : 'Cadastro de'}} pessoa">
+          <div class="ui-g">
+            <div class="ui-g-3 ui-fluid">
+              <label>Nome</label> <br />
+              <input pInputText type="text" style="width:100%" name="nome" required [(ngModel)]="pessoa.nome" />
+            </div>
 
-        <div class="ui-g">
-          <div class="ui-g-3 ui-fluid">
-            <label>Nome</label> <br/>
-            <input pInputText type="text" style="width:100%" name="nome" ngModel #nome="ngModel" required/>
+            <div class="ui-g-2 ui-fluid">
+              <label>CPF</label> <br />
+              <p-inputMask mask="999.999.999-99" name="cpf" [(ngModel)]="pessoa.cpf"></p-inputMask>
+            </div>
           </div>
 
-          <div class="ui-g-2 ui-fluid">
-            <label>CPF</label> <br/>
-            <p-inputMask mask="999.999.999-99"></p-inputMask>
-          </div>
-        </div>
+          <div class="ui-g">
+            <div class="ui-g-3 ui-fluid">
+              <label>E-mail</label> <br />
+              <input pInputText type="email" style="width:100%" name="email" [(ngModel)]="pessoa.email" />
+            </div>
 
-        <div class="ui-g">
-          <div class="ui-g-3 ui-fluid">
-            <label>E-mail</label> <br/>
-            <input pInputText type="email" style="width:100%" />
-          </div>
-
-          <div class="ui-g-2 ui-fluid">
-            <label>Nascimento</label> <br/>
-            <p-inputMask mask="99/99/9999"></p-inputMask>
-          </div>
-        </div>
-
-        <hr/>
-
-        <div class="ui-g">
-          <div class="ui-g-1 ui-fluid">
-            <label>DDD</label> <br/>
-            <p-inputMask mask="99" id="ddd" name="ddd" [(ngModel)]="telefone.ddd"></p-inputMask>
+            <div class="ui-g-2 ui-fluid">
+              <label>Nascimento</label> <br />
+              <p-inputMask mask="99/99/9999" name="dataNascimento" [(ngModel)]="pessoa.dataNascimento"></p-inputMask>
+            </div>
           </div>
 
-          <div class="ui-g-2 ui-fluid">
-            <label>Telefone</label> <br/>
-            <p-inputMask mask="9.9999-9999" name="telefone" [(ngModel)]="telefone.telefone"></p-inputMask>
+          <hr />
+
+          <div class="ui-g">
+            <div class="ui-g-1 ui-fluid">
+              <label>DDD</label> <br />
+              <p-inputMask mask="99" id="ddd" name="ddd" [(ngModel)]="telefone.ddd"></p-inputMask>
+            </div>
+
+            <div class="ui-g-2 ui-fluid">
+              <label>Telefone</label> <br />
+              <p-inputMask mask="9.9999-9999" name="telefone" [(ngModel)]="telefone.numero"></p-inputMask>
+            </div>
+
+            <div class="ui-g-2 ui-fluid">
+              <button pButton type="button" label="Adicionar" icon="pi pi-plus-circle" iconPos="left" style="margin-top:18px"
+                (click)="adicionarTelefone()"></button>
+            </div>
           </div>
 
-          <div class="ui-g-2 ui-fluid">
-            <p-button label="Adicionar" icon="pi pi-plus-circle" iconPos="left" style="padding-top:18px" (onClick)="adicionarTelefone()"></p-button>
+          <div class="ui-g">
+            <div class="ui-g-12">
+              <p-table [value]="pessoa.telefones" [responsive]="true">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>DDD</th>
+                    <th>Telefone</th>
+                    <th class="col-acoes">Ações</th>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-tel let-t="rowIndex">
+                  <tr>
+                    <td>{{tel.ddd}}</td>
+                    <td>{{tel.numero}}</td>
+                    <td class="col-acoes">
+                      <button pButton type="button" icon="pi pi-times" pTooltip="Deletar" (click)="deletarTelefone(t)"></button>
+                    </td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="3">Nenhum telefone adicionado.</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
           </div>
-        </div>
 
-        <div class="ui-g">
-          <div class="ui-g-12">
-            <p-table [value]="telefones" [responsive]="true">
-              <ng-template pTemplate="header">
-                <tr>
-                  <th>DDD</th>
-                  <th>Telefone</th>
-                  <th class="col-acoes">Ações</th>
-                </tr>
-              </ng-template>
+          <br />
 
-              <ng-template pTemplate="body" let-tel>
-                <tr>
-                  <td>{{tel.ddd}}</td>
-                  <td>{{tel.telefone}}</td>
-                  <td class="col-acoes">
-                    <button pButton icon="pi pi-times" pTooltip="Deletar"></button>
-                  </td>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="emptymessage">
-                <tr>
-                  <td colspan="3">Nenhum telefone adicionado.</td>
-                </tr>
-              </ng-template>
-            </p-table>
+          <div class="ui-g">
+            <div class="ui-g-1 ui-fluid">
+              <p-button label="Salvar" icon="pi pi-save" iconPos="left"></p-button>
+            </div>
+
+            <div class="ui-g-1 ui-fluid">
+              <p-button label="Listar" icon="pi pi-bars" iconPos="left" styleClass="ui-button-success" [routerLink]="['/']"></p-button>
+            </div>
           </div>
-        </div>
-
-        <br/>
-
-        <div class="ui-g">
-          <div class="ui-g-12">
-            <p-button label="Salvar" icon="pi pi-save" iconPos="left"></p-button>
-          </div>
-        </div>
-
-      </p-panel>
+        </p-panel>
+      </form>
     </div>
   </div>
 </form>

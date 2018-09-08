@@ -8,9 +8,15 @@ import { InputMaskModule } from 'primeng/components/inputmask/inputmask';
 import { ButtonModule } from 'primeng/components/button/button';
 import { TableModule } from 'primeng/components/table/table';
 import { TooltipModule } from 'primeng/components/tooltip/tooltip';
+import { MessageService } from 'primeng/components/common/messageservice';
+import { GrowlModule } from 'primeng/components/growl/growl';
+import { ConfirmDialogModule } from 'primeng/components/confirmdialog/confirmdialog';
+import { ConfirmationService } from 'primeng/components/common/api';
 
 import { PessoaListagemComponent } from './pessoa-listagem/pessoa-listagem.component';
 import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
+import { RouterModule } from '@angular/router';
+
 
 @NgModule({
   imports: [
@@ -22,7 +28,10 @@ import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.compo
     InputMaskModule,
     ButtonModule,
     TableModule,
-    TooltipModule
+    TooltipModule,
+    GrowlModule,
+    ConfirmDialogModule,
+    RouterModule
   ],
   declarations: [
     PessoaListagemComponent,
@@ -30,6 +39,10 @@ import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.compo
   ],
   exports: [
     PessoaListagemComponent,
-    PessoaCadastroComponent]
+    PessoaCadastroComponent],
+  providers: [
+    MessageService,
+    ConfirmationService
+  ]
 })
 export class PessoaModule { }

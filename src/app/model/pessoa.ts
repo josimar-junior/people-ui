@@ -7,6 +7,6 @@ export class Pessoa {
     email: string;
     dataNascimento: Date;
     telefones: Telefone[] = [];
-    idade: number;
-    quantidadeTelefones: number;
+    idade?: number;
+    quantidadeTelefones?: number;
 }
