@@ -4,14 +4,18 @@ import { Http, URLSearchParams, Headers } from '@angular/http';
 import { PessoaFiltro } from '../model/filtro';
 import { Pessoa } from '../model/pessoa';
 
+import { environment } from '../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class PessoaService {
 
-  url = 'http://localhost:8080/pessoas';
+  url: string;
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) { 
+    this.url = `${environment.url}/pessoas`;
+  }
 
   pesquisar(filtro: PessoaFiltro): Promise<any> {
 
