@@ -6,6 +6,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import { PessoaService } from '../pessoa.service';
 import { Pessoa } from '../../model/pessoa';
 import { PessoaFiltro } from '../../model/filtro';
+import { ErrorHandlerService } from '../../core/error-handler.service';
 
 @Component({
   selector: 'app-pessoa-listagem',
@@ -21,7 +22,8 @@ export class PessoaListagemComponent implements OnInit {
 
   constructor(private pessoaService: PessoaService,
               private messageService: MessageService,
-              private confirmationService: ConfirmationService) { }
+              private confirmationService: ConfirmationService,
+              private errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit() {
   }
@@ -34,7 +36,8 @@ export class PessoaListagemComponent implements OnInit {
       .then(resultado => {
         this.pessoas = resultado.pessoas;
         this.qtdRegistros = resultado.qtdRegistros;
-      });
+      })
+      .catch(erro => this.errorHandlerService.handle(erro));
   }
 
   mudarPagina(event: LazyLoadEvent) {
@@ -42,25 +45,30 @@ export class PessoaListagemComponent implements OnInit {
     this.pesquisar(paginaAtual);
   }
 
-  confirmarDeletar(id: number) {
+  confirmarDeletar(pessoa: Pessoa) {
     this.confirmationService.confirm({
       message: 'Deseja realmente deletar esta pessoa?',
       accept: () => {
-        this.deletar(id);
+        this.deletar(pessoa);
       }
     });
   }
 
-  deletar(id: number) {
-    this.pessoaService.deletar(id)
+  deletar(pessoa: Pessoa) {
+    console.log(this.tabela.first);
+    this.pessoaService.deletar(pessoa.id)
       .then(() => {
-        if (this.tabela.first === 0) {
+
+        let indice = this.pessoas.indexOf(pessoa);
+
+        this.pessoas.splice(indice, 1);
+
+       if (this.tabela.first !== 0) {
           this.pesquisar();
-        } else {
-          this.tabela.first = 0;
-        }
+       }
 
         this.messageService.add({ severity: 'success', detail: 'Pessoa removida com sucesso.' });
-      });
+      })
+      .catch(erro => this.errorHandlerService.handle(erro));
   }
 }

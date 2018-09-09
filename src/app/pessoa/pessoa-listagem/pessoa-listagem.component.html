@@ -60,7 +60,7 @@
                 <td>{{pessoa.quantidadeTelefones}}</td>
                 <td class="col-acoes">
                   <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="left" [routerLink]="['/pessoas', pessoa.id]"></a>
-                  <button pButton icon="pi pi-times" style="margin-left: 5px;" pTooltip="Deletar" (click)="confirmarDeletar(pessoa.id)"></button>
+                  <button pButton icon="pi pi-times" style="margin-left: 5px;" pTooltip="Deletar" (click)="confirmarDeletar(pessoa)"></button>
                 </td>
               </tr>
             </ng-template>

@@ -6,6 +6,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+
+import { CoreModule } from './core/core.module';
 import { PessoaModule } from './pessoa/pessoa.module';
 import { PessoaService } from './pessoa/pessoa.service';
 
@@ -20,6 +22,8 @@ import { ROUTES } from './app.routes';
     FormsModule,
     BrowserAnimationsModule,
     HttpModule,
+
+    CoreModule,
     PessoaModule,
     RouterModule.forRoot(ROUTES)
   ],

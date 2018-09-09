@@ -12,19 +12,19 @@
 
             <div class="ui-g-2 ui-fluid">
               <label>CPF</label> <br />
-              <p-inputMask mask="999.999.999-99" name="cpf" [(ngModel)]="pessoa.cpf"></p-inputMask>
+              <p-inputMask mask="999.999.999-99" name="cpf" required [(ngModel)]="pessoa.cpf"></p-inputMask>
             </div>
           </div>
 
           <div class="ui-g">
             <div class="ui-g-3 ui-fluid">
               <label>E-mail</label> <br />
-              <input pInputText type="email" style="width:100%" name="email" [(ngModel)]="pessoa.email" />
+              <input pInputText type="email" style="width:100%" name="email" required email [(ngModel)]="pessoa.email" />
             </div>
 
             <div class="ui-g-2 ui-fluid">
               <label>Nascimento</label> <br />
-              <p-inputMask mask="99/99/9999" name="dataNascimento" [(ngModel)]="pessoa.dataNascimento"></p-inputMask>
+              <p-inputMask mask="99/99/9999" name="dataNascimento" required [(ngModel)]="pessoa.dataNascimento"></p-inputMask>
             </div>
           </div>
 
@@ -42,8 +42,8 @@
             </div>
 
             <div class="ui-g-2 ui-fluid">
-              <button pButton type="button" label="Adicionar" icon="pi pi-plus-circle" iconPos="left" style="margin-top:18px"
-                (click)="adicionarTelefone()"></button>
+              <p-button type="button" label="Adicionar" icon="pi pi-plus-circle" iconPos="left" style="margin-top:18px"
+                (onClick)="adicionarTelefone()" [disabled]="telefoneInvalido"></p-button>
             </div>
           </div>
 
@@ -80,7 +80,7 @@
 
           <div class="ui-g">
             <div class="ui-g-1 ui-fluid">
-              <p-button label="Salvar" icon="pi pi-save" iconPos="left"></p-button>
+              <p-button label="Salvar" icon="pi pi-save" iconPos="left" [disabled]="!frm.valid || camposInvalidos"></p-button>
             </div>
 
             <div class="ui-g-1 ui-fluid">
